@@ -1,4 +1,4 @@
-	
+ï»¿	
 	function Swipe(param,param1){
 		this.leftCallback = param;
 		this.rightCallback = param1;
@@ -20,9 +20,9 @@
 			return;
 		}
 		if(e.changedTouches[0].pageX - this.temp.startPageX > 0){
-			this.swipeRight();//ÏòÓÒ
+			this.swipeRight();//å‘å³
 		}else{
-			this.swipeLeft();//Ïò×ó
+			this.swipeLeft();//å‘å·¦
 		}
 	}
 	Swipe.prototype.swipeLeft = function(){

@@ -1,7 +1,8 @@
 ﻿	
-	function Swipe(param,param1){
-		this.leftCallback = param;
-		this.rightCallback = param1;
+	function Swipe(callback){
+		if(!arguments.length) return;
+		this.leftCallback = callback.leftCallback ? callback.leftCallback : null;
+		this.rightCallback = callback.rightCallback ? callback.rightCallback : null;
 	}
 	Swipe.prototype.temp = {
 		"startPageX" : '',

@@ -28,14 +28,16 @@
 		
 		function s(){};
 		s.prototype = new Swipe();
-		s.prototype.swipeLeft = function(){
-			alert('向左');
-		}
-		s.prototype.swipeRight = function(){
-			alert('向右')
-		}
-		var a = new s();
+		var a = new Swipe({
+			leftCallback : function(){
+				alert('向左');
+			},
+			rightCallback : function(){
+				alert('向右')
+			}
+		});
 		a.swipe($test);
+		
 	</script>
 </body>
 </html>

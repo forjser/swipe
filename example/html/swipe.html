@@ -30,13 +30,13 @@
 		s.prototype = new Swipe();
 		var a = new Swipe({
 			leftCallback : function(){
-				alert('向左');
+				alert('一直向左');
 			},
 			rightCallback : function(){
 				alert('向右')
 			}
 		});
-		a.swipe($test);
+		a.swipe($test,a);
 		
 	</script>
 </body>

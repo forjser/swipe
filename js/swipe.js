@@ -32,7 +32,7 @@
 	Swipe.prototype.swipeRight = function(){
 		if(this.rightCallback)this.rightCallback();
 	}
-	Swipe.prototype.swipe = function($ele){
-		$ele.addEventListener("touchstart",a.start.bind(a),false);
-		$ele.addEventListener("touchend",a.end.bind(a),false);
+	Swipe.prototype.swipe = function($ele,self){
+		$ele.addEventListener("touchstart",self.start.bind(self),false);
+		$ele.addEventListener("touchend",self.end.bind(self),false);
 	}

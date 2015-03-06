@@ -19,9 +19,9 @@
 <body>
 	<div class="Absolute-Center" id="test">
 	</div>
-	<script type="text/javascript" src="../../js/swipe.js"></script>
+	<script type="text/javascript" src="../../js/lswipe.js"></script>
 	<script type="text/javascript">
-		function $(param){
+		/*function $(param){
 			return document.getElementById(param);
 		}
 		var $test = $('test');
@@ -36,8 +36,19 @@
 				alert('向右')
 			}
 		});
-		a.swipe($test,a);
+		a.swipe($test,a);*/
 		
+		
+		Y('test').on("swipe",
+			{
+				"leftCallback" : function(){
+					alert("左滑");
+				},
+				"rightCallback" : function(){
+					alert("右滑");
+				}
+			}
+		);
 	</script>
 </body>
 </html>

@@ -19,7 +19,7 @@
 <body>
 	<div class="Absolute-Center" id="test">
 	</div>
-	<script type="text/javascript" src="../js/swipe.js"></script>
+	<script type="text/javascript" src="../../js/swipe.js"></script>
 	<script type="text/javascript">
 		function $(param){
 			return document.getElementById(param);
@@ -28,14 +28,16 @@
 		
 		function s(){};
 		s.prototype = new Swipe();
-		s.prototype.swipeLeft = function(){
-			alert('向左');
-		}
-		s.prototype.swipeRight = function(){
-			alert('向右')
-		}
-		var a = new s();
-		a.swipe($test);
+		var a = new Swipe({
+			leftCallback : function(){
+				alert('一直向左');
+			},
+			rightCallback : function(){
+				alert('向右')
+			}
+		});
+		a.swipe($test,a);
+		
 	</script>
 </body>
 </html>

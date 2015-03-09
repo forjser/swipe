@@ -1,52 +1,51 @@
 ﻿	var liu = (function(){
 		var L={};
 		var Y;
+		var temp = {
+			"startPageX" : '',
+			"startPageY" : ''
+		};
+		var leftCallback;
+		var rightCallback;
 		L.fn = {
-			test : function(){console.log('fordebug');},
-			error : function(errorType){console.log(errorType);},
 			on : function(eventname,callback){
-				this.leftCallback = callback.leftCallback ? callback.leftCallback : null;
-				this.rightCallback = callback.rightCallback ? callback.rightCallback : null;
+				leftCallback = callback.leftCallback || null;
+				rightCallback = callback.rightCallback || null;
 				for(var i=0;i<this.length;i++){
-					this.addEvent(this,this[i],eventname,callback,false);
-				}
-			},
-			addEvent : function(self,context,eventname,callback,boolen){
-				switch(eventname){
-					case "swipe" : context.addEventListener('touchstart',this.start.bind(self),boolen);
-									context.addEventListener('touchend',this.end.bind(self),boolen);
-									break;
-					default : self.error('event error');
+					addEvent.call(this[i],this,eventname,false);
 				}
 			}
 		}
-		L.fn.temp = {
-			"startPageX" : '',
-			"startPageY" : '',
-			"leftCallback" : '',
-			"rightCallback" : ''
+		function addEvent(context,eventname,boolen){
+			switch(eventname){
+				case "swipe" : this.addEventListener('touchstart',t_start.bind(context),boolen);
+								this.addEventListener('touchend',t_end.bind(context),boolen);
+								break;
+				default : log('event error');
+			}
 		}
-		L.fn.start = function(){
+		function log(param){
+			console.log(param);
+		}
+		function t_start(){
 			var e = arguments[0];
 			e.preventDefault();
-			this.temp.startPageX = e.changedTouches[0].pageX;
-			this.temp.startPageY = e.changedTouches[0].pageY;
+			temp.startPageX = e.changedTouches[0].pageX;
+			temp.startPageY = e.changedTouches[0].pageY;
 		}
-		L.fn.end = function(){
+		function t_end(){
 			var e = arguments[0];
 			e.preventDefault();
-			this.doEvent(e);
+			doEvent.call(this,e);
 		}
-		L.fn.doEvent = function(e){
-			if(Math.abs(e.changedTouches[0].pageY - this.temp.startPageY) > 50 || Math.abs(e.changedTouches[0].pageX - this.temp.startPageX) < 20){
+		function doEvent(e){
+			if(Math.abs(e.changedTouches[0].pageY - temp.startPageY) > 50 || Math.abs(e.changedTouches[0].pageX - temp.startPageX) < 20){
 				return;
 			}
-			if(e.changedTouches[0].pageX - this.temp.startPageX > 0){
-				console.log('向右');
-				if(this.rightCallback)this.rightCallback();//向右
+			if(e.changedTouches[0].pageX - temp.startPageX > 0){
+				if(rightCallback)rightCallback();//向右
 			}else{
-				console.log('向左');
-				if(this.leftCallback)this.leftCallback();//向左
+				if(leftCallback)leftCallback();//向左
 			}
 		}
 		Y = function(dom){

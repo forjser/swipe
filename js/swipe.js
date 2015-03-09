@@ -11,8 +11,12 @@
 			on : function(eventname,callback){
 				leftCallback = callback.leftCallback || null;
 				rightCallback = callback.rightCallback || null;
-				for(var i=0;i<this.length;i++){
-					addEvent.call(this[i],this,eventname,false);
+				for(var i=0;i<this[0].length;i++){
+					if(!hasJquery()){
+						addEvent.call(this[i],this,eventname,false);
+					}else{
+						addEvent.call(this[0][i],this,eventname,false);
+					}
 				}
 			}
 		}
@@ -45,11 +49,19 @@
 			if(e.changedTouches[0].pageX - temp.startPageX > 0){
 				if(rightCallback)rightCallback();//向右
 			}else{
+				console.log(leftCallback);
 				if(leftCallback)leftCallback();//向左
 			}
 		}
+		var getId = function(param){
+			return param.slice(1);
+		}
+		var hasJquery = function(){
+			var jQuery = window.jQuery;
+			return !!jQuery;
+		}
 		Y = function(dom){
-			dom = [document.getElementById(dom)];
+			dom = hasJquery() ? [jQuery(dom)] : [document.getElementById(getId(dom))];
 			dom.__proto__ = L.fn;
 			return dom;
 		}

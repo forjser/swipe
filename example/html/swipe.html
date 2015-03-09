@@ -10,35 +10,16 @@
 		  margin: auto;
 		  position: absolute;
 		  top: 0; left: 0; bottom: 0; right: 0;
-		  height:100%;
+		  height:40%;
 		  width:80%;
 		  border:1px solid #000;
 		}
 	</style>
 </head>
 <body>
-	<div class="Absolute-Center" id="test">
-	</div>
-	<script type="text/javascript" src="../../js/lswipe.js"></script>
+	<div class="Absolute-Center" id="test"></div>
+	<script type="text/javascript" src="../../js/swipe.js"></script>
 	<script type="text/javascript">
-		/*function $(param){
-			return document.getElementById(param);
-		}
-		var $test = $('test');
-		
-		function s(){};
-		s.prototype = new Swipe();
-		var a = new Swipe({
-			leftCallback : function(){
-				alert('一直向左');
-			},
-			rightCallback : function(){
-				alert('向右')
-			}
-		});
-		a.swipe($test,a);*/
-		
-		
 		Y('test').on("swipe",
 			{
 				"leftCallback" : function(){

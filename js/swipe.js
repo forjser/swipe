@@ -15,7 +15,7 @@
 					if(!hasJquery()){
 						addEvent.call(this[i],this,eventname,false);
 					}else{
-						addEvent.call(this[0][i],this,eventname,false);
+						addEvent.call(this[0][i],this[0].eq(i),eventname,false);
 					}
 				}
 			}
@@ -47,10 +47,9 @@
 				return;
 			}
 			if(e.changedTouches[0].pageX - temp.startPageX > 0){
-				if(rightCallback)rightCallback();//向右
+				if(rightCallback)return rightCallback.call(this);//向右
 			}else{
-				console.log(leftCallback);
-				if(leftCallback)leftCallback();//向左
+				if(leftCallback)return leftCallback.call(this);//向左
 			}
 		}
 		var getId = function(param){

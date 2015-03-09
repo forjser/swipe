@@ -39,16 +39,13 @@
 		Y('.test').on("swipe",
 			{
 				"leftCallback" : function(){
-					console.log($(this));
+					alert("左滑"+$(this).html());
 				},
 				"rightCallback" : function(){
-					alert("右滑");
+					alert("右滑"+$(this).html());
 				}
 			}
 		);
-		$('.test').click(function(){
-			console.log($(this))
-		})
 	</script>
 </body>
 </html>

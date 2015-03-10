@@ -14,25 +14,48 @@
 		  color:#fff;
 		  text-align:center;
 		  line-height:150px;
+		  margin-bottom:10px;
 		}
+		#bbb{background:#c6396d;}
 		.test{background:#454545;}
 		.test1{background:#502145;}
 	</style>
 </head>
 <body>
-	<div class="Absolute-Center" id="test">#test</div>
+	<div class="Absolute-Center" id="aaa">#aaa</div>
+	<div class="Absolute-Center" id="bbb">#bbb</div>
 	<div class="Absolute-Center test">.test</div>
 	<div class="Absolute-Center test test1">.test1</div>
 	<script type="text/javascript" src="../../js/swipe.js"></script>
 	<script type="text/javascript" src="../../js/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript">
-		Y('#test').on("swipe",
+		Y('#aaa').on("swipe",
 			{
 				"leftCallback" : function(){
-					alert("左滑"+$(this).html());
+					alert("左滑0"+$(this).html());
 				},
 				"rightCallback" : function(){
-					alert("右滑"+$(this).html());
+					alert("右滑0"+$(this).html());
+				}
+			}
+		);
+		Y('#bbb').on("tap",
+			{
+				"shortCallback" : function(){
+					alert("按1"+$(this).html());
+				},
+				"longCallback" : function(){
+					alert("长按1"+$(this).html());
+				}
+			}
+		);
+		Y('.test1').on("tap",
+			{
+				"shortCallback" : function(){
+					alert("按1"+$(this).html());
+				},
+				"longCallback" : function(){
+					alert("长按1"+$(this).html());
 				}
 			}
 		);

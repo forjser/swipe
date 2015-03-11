@@ -26,46 +26,47 @@
 	<div class="Absolute-Center" id="bbb">#bbb</div>
 	<div class="Absolute-Center test">.test</div>
 	<div class="Absolute-Center test test1">.test1</div>
+	<div class="Absolute-Center" id="fuck">addEventListener</div>
 	<script type="text/javascript" src="../../js/swipe.js"></script>
 	<script type="text/javascript" src="../../js/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript">
 		Y('#aaa').on("swipe",
 			{
 				"leftCallback" : function(){
-					alert("左滑0"+$(this).html());
+					console.log("左滑0"+$(this).html());
 				},
 				"rightCallback" : function(){
-					alert("右滑0"+$(this).html());
+					console.log("右滑0"+$(this).html());
 				}
 			}
 		);
 		Y('#bbb').on("tap",
 			{
 				"shortCallback" : function(){
-					alert("按1"+$(this).html());
+					console.log("按1"+$(this).html());
 				},
 				"longCallback" : function(){
-					alert("长按1"+$(this).html());
+					console.log("长按1"+$(this).html());
 				}
 			}
 		);
 		Y('.test1').on("tap",
 			{
 				"shortCallback" : function(){
-					alert("按1"+$(this).html());
+					console.log("按1"+$(this).html());
 				},
 				"longCallback" : function(){
-					alert("长按1"+$(this).html());
+					console.log("长按1"+$(this).html());
 				}
 			}
 		);
 		Y('.test').on("swipe",
 			{
 				"leftCallback" : function(){
-					alert("左滑"+$(this).html());
+					console.log("左滑"+$(this).html());
 				},
 				"rightCallback" : function(){
-					alert("右滑"+$(this).html());
+					console.log("右滑"+$(this).html());
 				}
 			}
 		);

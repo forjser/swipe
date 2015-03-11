@@ -9,6 +9,8 @@
 		var temp = {
 			"startPageX" : '',
 			"startPageY" : '',
+			"movePageX" : '',
+			"movePageY" : '',
 			"startTime" : '',
 			"endTime" : ''
 		};
@@ -46,6 +48,7 @@
 								this.addEventListener('touchend',s_end(callback).bind(context),boolen);
 								break;
 				case "tap" : this.addEventListener('touchstart',tap_start(callback).bind(context),boolen);
+								this.addEventListener('touchmove',tap_move.bind(context),boolen);
 								this.addEventListener('touchend',tap_end(callback).bind(context),boolen);
 								break;
 				default : log('event error');
@@ -57,24 +60,31 @@
 		}
 		/*通用开始函数*/
 		
-		function start(e){
+		function setStartCoordinate(e){
 			e.preventDefault();
-			var date = new Date();
-			temp.startTime = date.getTime();
-			temp.startPageX = e.changedTouches[0].pageX;
-			temp.startPageY = e.changedTouches[0].pageY;
+			temp.movePageX = temp.startPageX = e.changedTouches[0].pageX;
+			temp.movePageY = temp.startPageY = e.changedTouches[0].pageY;
 		}
 		
 		/*tap开始*/
 		var tap_start = function(callback){
 			return function(){
 				var e = arguments[0];
-				start(e);
 				var self = this;
+				setStartCoordinate(e);
+				var date = new Date();
+				temp.startTime = date.getTime();
 				longtimer = setInterval(function(){
 					doEvent.call(self,callback,e,'tap',false);
 				},100)
 			}
+		}
+		
+		function tap_move(callback){
+			var e = arguments[0];
+			temp.movePageX = e.changedTouches[0].pageX;
+			temp.movePageY = e.changedTouches[0].pageY;
+			doEvent.call(this,callback,e,'tap_move',false);
 		}
 		
 		var tap_end = function(callback){
@@ -90,9 +100,7 @@
 		/*swipe开始*/
 		function s_start(){
 			var e = arguments[0];
-			e.preventDefault();
-			temp.startPageX = e.changedTouches[0].pageX;
-			temp.startPageY = e.changedTouches[0].pageY;
+			setStartCoordinate(e);
 		}
 		var s_end = function(callback){
 			return function(){
@@ -102,6 +110,12 @@
 			}
 		}
 		/*swipe结束*/
+		
+		function tapIsTrue(){
+			if(Math.abs(temp.movePageY - temp.startPageY) > 10 || Math.abs(temp.movePageX - temp.startPageX) > 10){
+				return;
+			}
+		}
 		
 		function doEvent(callback,e,order){
 			switch(arguments[2]){
@@ -120,22 +134,22 @@
 					temp.endTime = date.getTime();
 					var dateins = temp.endTime - temp.startTime;
 					if(dateins/1000 > 1 && !arguments[3]){
-						if(Math.abs(e.changedTouches[0].pageY - temp.startPageY) < 10 && Math.abs(e.changedTouches[0].pageX - temp.startPageX) < 10){
-							clearInterval(longtimer);
-							//console.log("结束Y："+e.changedTouches[0].pageY+"结束X："+e.changedTouches[0].pageX+"开始y："+temp.startPageY+"开始x："+temp.startPageX)
-							if(callback.longCallback)return callback.longCallback.call(this);
-						}
+						tapIsTrue();
+						clearInterval(longtimer);
+						if(callback.longCallback)return callback.longCallback.call(this);
 					}
 					if(dateins<100 && arguments[3]){
-						if(Math.abs(e.changedTouches[0].pageY - temp.startPageY) < 10 && Math.abs(e.changedTouches[0].pageX - temp.startPageX) < 10){
-							clearInterval(longtimer);
-							if(callback.shortCallback)return callback.shortCallback.call(this);
-						}
+						tapIsTrue();
+						clearInterval(longtimer);
+						if(callback.shortCallback)return callback.shortCallback.call(this);
 					}
+					break;
+				case 'tap_move' :
+					tapIsTrue();
+					clearInterval(longtimer);
 					break;
 				default : log('event error');
 			}
-			
 		}
 		return Y;
 	})();

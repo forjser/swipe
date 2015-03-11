@@ -1,0 +1,61 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<style type="text/css">
+		html,body{height:100%;}
+		.Absolute-Center {
+		  margin: auto;
+		  height:150px;
+		  width:80%;
+		  background:#40966e;
+		  color:#fff;
+		  text-align:center;
+		  line-height:150px;
+		  margin-bottom:10px;
+		}
+		#bbb{background:#c6396d;}
+		.test{background:#454545;}
+		.test1{background:#502145;}
+	</style>
+</head>
+<body>
+	<div class="Absolute-Center" id="aaa">#aaa</div>
+	<div class="Absolute-Center" id="bbb">#bbb</div>
+	<script type="text/javascript" src="../../js/swipe.js"></script>
+	<script type="text/javascript">
+		Y('#aaa').on("swipe",
+			{
+				"leftCallback" : function(){
+					console.log("左滑0");
+				},
+				"rightCallback" : function(){
+					console.log("右滑0");
+				}
+			}
+		);
+		Y('#bbb').on("tap",
+			{
+				"shortCallback" : function(){
+					console.log("按1");
+				},
+				"longCallback" : function(){
+					console.log("长按1");
+				}
+			}
+		);
+		Y('#bbb').on("swipe",
+			{
+				"leftCallback" : function(){
+					console.log("左滑1");
+				},
+				"rightCallback" : function(){
+					console.log("右滑1");
+				}
+			}
+		);
+	</script>
+</body>
+</html>

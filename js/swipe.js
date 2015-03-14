@@ -16,15 +16,25 @@
 		};
 		var timer;
 		var longtimer;
-		var getId = function(param){
-			return param.slice(1);
+		var getEle = function(param){
+			switch(param.charAt(0)){
+				case "#" : return [document.getElementById(param.slice(1))];break;
+				case "." : 
+						var arr = [];
+						var nodelist = document.querySelectorAll(param);
+						for(index in nodelist){
+							arr.push(nodelist[index])
+						}
+						return arr;break;
+				default : log('select error');return;
+			}
 		}
 		var hasJquery = function(){
 			var jQuery = window.jQuery;
 			return !!jQuery;
 		}
 		Y = function(dom){
-			dom = hasJquery() ? [jQuery(dom)] : [document.getElementById(getId(dom))];
+			dom = hasJquery() ? [jQuery(dom)] : getEle(dom);
 			dom.__proto__ = Y.fn;
 			return dom;
 		}
@@ -32,7 +42,8 @@
 			on : function(eventname,callback){
 				if(!hasJquery()){
 					for(var i=0;i<this.length;i++){
-						addEvent.call(this[i],this,eventname,false,callback);
+						if(!this[i].addEventListener) return;
+						addEvent.call(this[i],this[i],eventname,false,callback);
 					}
 				}else{
 					for(var i=0;i<this[0].length;i++){
@@ -58,8 +69,16 @@
 		function log(param){
 			console.log(param);
 		}
-		/*通用开始函数*/
-		
+		/*通用*/
+		function tapIsTrue(){
+			if(Math.abs(temp.movePageY - temp.startPageY) > 10 || Math.abs(temp.movePageX - temp.startPageX) > 10){
+				return;
+			}
+		}
+		function getDate(){
+			var date = new Date();
+			return date.getTime();
+		}
 		function setStartCoordinate(e){
 			e.preventDefault();
 			temp.movePageX = temp.startPageX = e.changedTouches[0].pageX;
@@ -72,8 +91,7 @@
 				var e = arguments[0];
 				var self = this;
 				setStartCoordinate(e);
-				var date = new Date();
-				temp.startTime = date.getTime();
+				temp.startTime = getDate();
 				longtimer = setInterval(function(){
 					doEvent.call(self,callback,e,'tap',false);
 				},100)
@@ -111,12 +129,6 @@
 		}
 		/*swipe结束*/
 		
-		function tapIsTrue(){
-			if(Math.abs(temp.movePageY - temp.startPageY) > 10 || Math.abs(temp.movePageX - temp.startPageX) > 10){
-				return;
-			}
-		}
-		
 		function doEvent(callback,e,order){
 			switch(arguments[2]){
 				case 'swipe' : 
@@ -130,8 +142,7 @@
 					}
 					break;
 				case 'tap' : 
-					var date = new Date();
-					temp.endTime = date.getTime();
+					temp.endTime = getDate();
 					var dateins = temp.endTime - temp.startTime;
 					if(dateins/1000 > 1 && !arguments[3]){
 						tapIsTrue();

@@ -19,11 +19,15 @@
 		#bbb{background:#c6396d;}
 		.test{background:#454545;}
 		.test1{background:#502145;}
+		.lswiped{background:#124585;}
+		.lswiper{background:#c3de99;}
 	</style>
 </head>
 <body>
 	<div class="Absolute-Center" id="aaa">#aaa</div>
 	<div class="Absolute-Center" id="bbb">#bbb</div>
+	<div class="Absolute-Center test">test</div>
+	<div class="Absolute-Center test">test1</div>
 	<script type="text/javascript" src="../../js/swipe.js"></script>
 	<script type="text/javascript">
 		Y('#aaa').on("swipe",
@@ -53,6 +57,17 @@
 				},
 				"rightCallback" : function(){
 					console.log("右滑1");
+				}
+			}
+		);
+		
+		Y('.test').on("swipe",
+			{
+				"leftCallback" : function(){
+					this.innerHTML = '你刚左滑过我了!';
+				},
+				"rightCallback" : function(){
+					this.innerHTML = '你刚右滑过我了!';
 				}
 			}
 		);
